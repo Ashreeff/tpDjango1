@@ -1,0 +1,81 @@
+<html>
+    <head>
+
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}"/>
+
+    </head>
+    <body>
+        <nav class="navbar">
+          <div class="logo"><a href="{% url 'index' %}">Magazin</a></div>
+          <ul>
+          <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="{% url 'produit' %}" class="menu-has-children">Products</a>
+                <ul class="submenu" style="width: 133px; border-radius: 10px; text-align: center; position: absolute; left: 100px; top: 100px">
+                  <li><a href="#">Vetements</a></li>
+                  <li><a href="#">Alimentaire</a></li>
+                  <li><a href="#">Meuble</a></li>
+                  <li><a href="#">Decor</a></li>
+                  <li><a href="#">Jouets</a></li>
+                  <li><a href="#">Sanitaire</a></li>
+                  <li><a href="#">Viselle</a></li>
+                  
+                </ul>
+                <li><a href="{% url 'fournisseur' %}">Fournisseur</a></li>
+              </li>
+            <li><a href="#">Portfolio</a></li>
+            <li><a href="#">Contact</a></li>
+            {% if user.is_authenticated %}
+              <li style="position: absolute; left: 990px"><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+              <li style="position: absolute; left: 990px"><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+            <li><a href="{% url 'panier' %}">Panier</a></li>
+            </ul>
+        </nav>
+        <nav class="navbar2">
+            <ul>
+            <li><a href="#">Vetements</a></li>
+            <li><a href="#">Alimentaire</a></li>
+            <li><a href="#">Meuble</a></li>
+            <li><a href="#">Jouets</a></li>
+            <li><a href="#">Sanitaire</a></li>
+            <li><a href="#">Viselle</a></li>
+            
+            
+         
+            
+            </ul>
+        </nav>
+        <section id="top-products">
+            <h2>The Products</h2>
+            <div class="product-container" style="margin-left:10%; width: 80%">
+                {% for prod in produits %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="product" style="width: 250px">
+                            <img
+                                name="image"
+                                style="width: 200px; height: 150px"
+                                src="{{ prod.img.url }}"
+                                alt="{{ prod.libelle }}"/>
+                            <h3 name="libelle">{{ prod.libelle }}</h3>
+                            <p name="description">{{ prod.description }}</p>
+                            <p name="categorie">{{ prod.catégorie }}</p>
+                            <input type="hidden" name="product_id" value="{{ prod.product_id }}">
+                            <button style="background-color: #18d26e; color: white; font-size: 14px; border-radius: 10px; border: 0px; height:25px" type="submit">Add to bascket</button>
+                         </div>
+                    </form>
+                {% endfor %}
+            </div>
+        </section>
+        <hr/>
+        <footer>
+            <div style="color: white; font-size: 20px; height: 200px; backgroun-color: black">
+              <p style="margin-top: 50px; text-align: center">      Contact us on our email: achrefhcini123@gmail.com       </p>
+            </div>
+          </footer>
+    </body>
+</html>

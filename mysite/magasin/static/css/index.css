@@ -1,0 +1,82 @@
+.submenu {
+    display: none;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  .menu-has-children:hover .submenu {
+    display:block;
+  }
+
+#top-products {
+    margin: 50px auto;
+    text-align: center;
+  }
+  
+  .product-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin-top: 30px;
+  }
+  
+  .product {
+    width: 30%;
+    margin-bottom: 30px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .product img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .product h3 {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  
+  .product p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .sections {
+    position: absolute;
+    left: 200px;
+  }
+
+  /* Style inputs with type="text", select elements and textareas */
+input[type=text], select, textarea {
+  width: 50%; /* Full width */
+  padding: 12px; /* Some padding */ 
+  border: 1px solid #3e913e; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 16px; /* Bottom margin */
+  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/* Style the submit button with a specific background color etc */
+.text-center .input[type=submit] {
+  width: 50%;
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+.text-center .input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+/* Add a background color and some padding around the form */

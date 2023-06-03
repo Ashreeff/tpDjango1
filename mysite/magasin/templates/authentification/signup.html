@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        success: function(response) {
+            if (response.success) {
+                window.location.href = response.redirect_url;  // Redirect to success URL
+            } else {
+                if (response.errors) {
+                    var errorMessage = 'Form is invalid:\n';
+                    for (var field in response.errors) {
+                        if (response.errors.hasOwnProperty(field)) {
+                            errorMessage += field + ': ' + response.errors[field].join(', ') + '\n';
+                        }
+                    }
+                    alert(errorMessage);
+                } else {
+                    alert(response.message);
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <form method="post" action="{% url 'signup' %}" id="signup-form">
+        <h3>Sign Up</h3>
+        {% csrf_token %}
+        <div>
+            <label for="name">Username:</label>
+            <input type="text" id="name" name="name" required placeholder="Username">
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Email">
+        </div>
+        <div>
+            <label for="password1">Password:</label>
+            <input type="password" id="password1" name="password1" required placeholder="Password">
+        </div>
+        <div>
+            <label for="password2">Confirm Password:</label>
+            <input type="password" id="password2" name="password2" required placeholder="Confirm Password">
+        </div>
+        <button type="submit">Sign Up</button>
+        <p id="lll">
+            Do you have an account? <a href="{% url 'login' %}">Sign In</a>.
+        </p>
+        {% if error_message %}
+            <div class="alert alert-danger">{{ error_message }}</div>
+        {% endif %}
+    </form></body>
+</html>

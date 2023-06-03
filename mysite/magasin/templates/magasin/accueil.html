@@ -1,0 +1,122 @@
+<!DOCTYPE html">
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Magazine Homepage</title>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}"/>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}"/>
+  <!-- Add your CSS file path here -->
+</head>
+<body>
+    <nav class="navbar">
+      <div class="logo"><a href="{% url 'index' %}">Magazin</a></div>
+      <ul>
+      <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="#">About us</a></li>
+        <li><a href="{% url 'index' %}" class="menu-has-children">Products</a>
+            <ul class="submenu" style="width: 133px; border-radius: 10px; text-align: center; position: absolute; left: 100px; top: 100px">
+              <li><a href="#">Vetements</a></li>
+              <li><a href="#">Alimentaire</a></li>
+              <li><a href="#">Meuble</a></li>
+              <li><a href="#">Decor</a></li>
+              <li><a href="#">Jouets</a></li>
+              <li><a href="#">Sanitaire</a></li>
+              <li><a href="#">Viselle</a></li>
+              
+              
+            </ul>
+            <li><a href="{% url 'fournisseur' %}">Fournisseur</a></li>
+          </li>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="#">Contact</a></li>
+        {% if user.is_authenticated %}
+          <li style="position: absolute; left: 990px"><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+          <li style="position: absolute; left: 990px"><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+        <li><a href="{% url 'panier' %}">Panier</a></li>
+        </ul>
+    </nav>
+    <section style="text-align: center; border: bold: 10px ; border-radius: 10px; border-color: white">
+      <br/><br/><br/>
+      <h1>Welcome to our Magazine! 
+        {% if user.is_authenticated %}
+          {{user.name}}
+        {% endif %}
+      </h1>
+      <p>Stay updated with the latest news, trends and insights.</p>
+    </section>
+  
+  
+  
+    <section id="top-products">
+      <div>
+        <h2>Top Products</h2>
+        <div class="product-container" style="margin-left:20%; width: 60%">
+            {% for prod in produits %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="product" style="width: 200px;">
+                        <img
+                            name="image"
+                            style="width: 200px; height: 150px"
+                            src="{{ prod.img.url }}"
+                            alt="{{ prod.libelle }}"/>
+                        <h3 name="libelle">{{ prod.libelle }}</h3>
+                        <p name="description">{{ prod.description }}</p>
+                        <p name="categorie">{{ prod.catégorie }}</p>
+                        <input type="hidden" name="product_id" value="{{ prod.product_id }}">
+                        <button style="background-color: #18d26e; color: white; font-size: 14px; border-radius: 10px; border: 0px; height:25px" type="submit">Add to bascket</button>
+                      </div>
+                </form>
+            {% endfor %}
+        </div>
+      </div>
+    </section>
+    <hr/>
+    <section class="contact">
+      {% if user.is_authenticated %}
+        <div class="container" style="text-align: center">
+            <div class="section-header">
+              <h3>Contact us</h3>
+              <p>Don't be shy! say wahy you want!</p>
+            </div>
+            <div class="form">
+                <form action="" method="post" role="form" class="contactForm">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                    <div class="validation"></div>
+                  </div>
+                  <div class="form-group">
+                    <textarea class="form-control" name="message" rows="5" id="message" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                    <div class="validation"></div>
+                  </div>
+                  <div class="text-center"><button type="submit" name="contactbtn">Send Message</button></div>
+                </form>
+            </div>
+      </div>  
+        {% if 'email_sent' %}
+        <div id="sendmessage" style="text-align: center">Your message has been sent. Thank you!</div>
+        {% else %}
+          <div id="errormessage" style="text-align: center">An error has appeared. Please try again letter</div>
+        {% endif %}
+    {% else %}
+      <p style="text-align: center">Please<a href="{% url 'login' %}"> log in </a>to contact us.</p>
+
+    {% endif %}    
+  </section>
+  <br/>
+  <hr/>
+
+    <!-- Add more sections, articles, or content here -->
+
+    <footer>
+      <div style="color: white; font-size: 16px; height: 200px; backgroun-color: blue">
+        <p style="margin-top: 50px; text-align: center">      Contact us on our email: achrefhcini123@gmail.com   </p>
+      </div>
+    </footer>
+
+</body>
+</html>
